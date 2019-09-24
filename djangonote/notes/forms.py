@@ -1,5 +1,5 @@
 from django import forms
-from notes.models import Note, Tag
+from .models import Note, Tag
 
 class NoteForm(forms.ModelForm):
 	
