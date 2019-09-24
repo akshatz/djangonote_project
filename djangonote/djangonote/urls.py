@@ -17,10 +17,11 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from djangonote.views import home_view
-from django.contrib.auth import login, logout
+from django.contrib.auth import logout
 
 urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(r'^$', home_view, name='home'),
-    url(r'^notes/', include('notes.urls'),name= 'notes'),
-    url(r'^logout/$', logout, {'next_page': 'home'}, name='logout'), 
+    url(r'^notes/', include('notes.urls'), name= 'notes'),
+    url(r'^logout/$', logout, name='logout'), 
 ]

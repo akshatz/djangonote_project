@@ -1,5 +1,6 @@
 from django import forms
-from notes.models import Note, Tag
+from .models import Note, Tag
+
 
 class NoteForm(forms.ModelForm):
 	
@@ -7,6 +8,7 @@ class NoteForm(forms.ModelForm):
 		model = Note
 		fields = ('label', 'body', 'tags')
 		
+
 class TagForm(forms.ModelForm):
 	
 	class Meta:
