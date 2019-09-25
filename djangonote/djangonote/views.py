@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect
-
+from django.shortcuts import redirect
 
 def home_view(request):
 	if request.method == 'POST':
@@ -14,7 +14,7 @@ def home_view(request):
 		auth = authenticate(username=username, password=password)
 		if auth is not None:
 			login(request, auth)
-			return HttpResponseRedirect(reverse('notes.index_view'))
+			return HttpResponseRedirect(reverse('notes.index'))
 		else:
 			messages.add_message(request, messages.INFO, "Authentication Failed!")
 			return HttpResponseRedirect(reverse('home'))
