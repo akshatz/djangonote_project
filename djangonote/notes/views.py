@@ -1,9 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
-from django.utils.text import slugify
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.contrib.auth.decorators import user_passes_test
 from notes.models import Note, Tag
 from notes.forms import NoteForm, TagForm
 from django.contrib.auth.decorators import user_passes_test
@@ -24,11 +22,16 @@ def index(request):
 def addnote(request):
     id = request.GET.get('id', None)
     if id is not None:
-        note = Note.objects.get(id=id)
+        note = get_object_or_404(Note, id=id)
     else:
         note = None
 
     if request.method == 'POST':
+        if request.POST.get('control') == 'delete':
+            note.delete()
+            messages.add_message(request, messages.INFO, 'Note Deleted!')
+            return HttpResponseRedirect(reverse('notes:index'))
+
         form = NoteForm(request.POST, instance=note)
         if form.is_valid():
             form.save()
@@ -38,8 +41,7 @@ def addnote(request):
     else:
         form = NoteForm(instance=note)
 
-    return render(request, 'notes/addnote.html', {'form': form})
-
+    return render(request, 'notes/addnote.html', {'form': form, 'note':note})
 
 @user_passes_test(superuser_only, login_url="/")
 def addtag(request):
