@@ -16,12 +16,14 @@ Including another URLconf
 
 from django.conf.urls import include, url
 from django.contrib import admin
-from djangonote.views import home_view
+from .views import *
 from django.contrib.auth import logout
+from django.urls import path
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls, name= 'admin'),
     url(r'^$', home_view, name='home'),
+    #url(r'^notes/', include(('notes','notes.urls'), namespace='notes'), name= 'notes'),
     url(r'^notes/', include('notes.urls'),name= 'notes'),
     url(r'^logout/$', logout, name='logout'), 
 ]

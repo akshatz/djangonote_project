@@ -14,14 +14,14 @@ def superuser_only(user):
 
 
 @user_passes_test(superuser_only, login_url="/")
-def index_view(request):
+def index(request):
     notes = Note.objects.all().order_by('-timestamp')
     tags = Tag.objects.all()
     return render(request, 'notes/index.html', {'notes': notes, 'tags': tags})
 
 
 @user_passes_test(superuser_only, login_url="/")
-def add_note(request):
+def addnote(request):
     id = request.GET.get('id', None)
     if id is not None:
         note = Note.objects.get(id=id)
@@ -42,7 +42,7 @@ def add_note(request):
 
 
 @user_passes_test(superuser_only, login_url="/")
-def add_tag(request):
+def addtag(request):
     id = request.GET.get('id', None)
     if id is not None:
         tag = get_object_or_404(Tag, id=id)
@@ -53,8 +53,7 @@ def add_tag(request):
         if request.POST.get('control') == 'delete':
             tag.delete()
             messages.add_message(request, messages.INFO, 'Tag Deleted!')
-            return HttpResponseRedirect(reverse('notes:index'))
-
+            return HttpResponseRedirect(reverse('notes.index'))
         form = TagForm(request.POST, instance=tag)
         if form.is_valid():
             form.save()
@@ -63,14 +62,12 @@ def add_tag(request):
 
     else:
         form = TagForm(instance=tag)
-
     return render(request, 'notes/addtag.html', {'form': form, 'tag': tag})
 
 
 @user_passes_test(superuser_only, login_url="/")
-def tag_search(request, **kwargs):
+def tagsearch(request, **kwargs):
     slug = kwargs['slug']
     tag = get_object_or_404(Tag, slug=slug)
     notes = tag.notes.all()
-
     return render(request, 'notes/tagsearch.html', {'notes': notes, 'tag': tag})
