@@ -11,6 +11,8 @@ class Note(models.Model):
 	
 	def __unicode__(self):
 		return self.label
+		
+
 
 
 class Tag(models.Model):

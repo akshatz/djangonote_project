@@ -22,10 +22,6 @@ from django.contrib.auth import logout
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home_view, name='home'),
-<<<<<<< HEAD
-    url(r'^notes/', include('notes.urls'), name= 'notes'),
-=======
     url(r'^notes/', include('notes.urls'),name= 'notes'),
->>>>>>> origin/master
     url(r'^logout/$', logout, name='logout'), 
 ]
