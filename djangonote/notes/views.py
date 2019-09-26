@@ -17,7 +17,6 @@ def index(request):
     tags = Tag.objects.all()
     return render(request, 'notes/index.html', {'notes': notes, 'tags': tags})
 
-
 @user_passes_test(superuser_only, login_url="/")
 def addnote(request):
     id = request.GET.get('id', None)
@@ -45,25 +44,28 @@ def addnote(request):
 
 @user_passes_test(superuser_only, login_url="/")
 def addtag(request):
+    
     id = request.GET.get('id', None)
     if id is not None:
         tag = get_object_or_404(Tag, id=id)
     else:
         tag = None
-
+    
     if request.method == 'POST':
         if request.POST.get('control') == 'delete':
             tag.delete()
             messages.add_message(request, messages.INFO, 'Tag Deleted!')
-            return HttpResponseRedirect(reverse('notes.index'))
+            return HttpResponseRedirect(reverse('notes:index'))
+        
         form = TagForm(request.POST, instance=tag)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.INFO, 'Tag Added!')
             return HttpResponseRedirect(reverse('notes:index'))
-
+    
     else:
         form = TagForm(instance=tag)
+        
     return render(request, 'notes/addtag.html', {'form': form, 'tag': tag})
 
 
@@ -73,3 +75,6 @@ def tagsearch(request, **kwargs):
     tag = get_object_or_404(Tag, slug=slug)
     notes = tag.notes.all()
     return render(request, 'notes/tagsearch.html', {'notes': notes, 'tag': tag})
+
+# def logout(request):
+#     return render(request, 'notes/index.html')
