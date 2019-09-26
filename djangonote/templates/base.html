@@ -55,21 +55,6 @@
 		    </div><!-- /.navbar-collapse -->
 		</div><!-- /.container -->
 	    </div>
-
-
-	{% if messages %}
-	<div class='container'>
-		<ul class="messages">
-		{% for message in messages %}
-		<li id="message_{{ forloop.counter}}"
-			{% if message.tags %} class="alert alert-{{ message.tags }}"
-			{% endif %}>
-			{{ message }}
-		</li>
-		{% endfor %}
-		</ul>
-	</div>
-	{% endif %}
         {% if messages %}
         <div class='container'>
         	<ul class="messages">
