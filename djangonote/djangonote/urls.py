@@ -23,7 +23,6 @@ from django.urls import path
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name= 'admin'),
     url(r'^$', home_view, name='home'),
-    #url(r'^notes/', include(('notes','notes.urls'), namespace='notes'), name= 'notes'),
-    url(r'^notes/', include('notes.urls'),name= 'notes'),
+    path('notes/', include('notes.urls'),name= 'notes'),
     url(r'^logout/$', logout, name='logout'), 
 ]

@@ -15,7 +15,7 @@ def superuser_only(user):
 def index(request):
     notes = Note.objects.all().order_by('-timestamp')
     tags = Tag.objects.all()
-    return render(request, 'notes/index.html', {'notes': notes, 'tags': tags})
+    return render(request, 'notes/index.html', {'notes':notes, 'tags': tags})
 
 @user_passes_test(superuser_only, login_url="/")
 def addnote(request):

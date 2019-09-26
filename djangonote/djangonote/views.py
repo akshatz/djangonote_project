@@ -14,7 +14,7 @@ def home_view(request):
 		auth = authenticate(username=username, password=password)
 		if auth is not None:
 			login(request, auth)
-			return HttpResponseRedirect(reverse('notes.index'))
+			return HttpResponseRedirect(('notes/index.html'))
 		else:
 			messages.add_message(request, messages.INFO, "Authentication Failed!")
 			return HttpResponseRedirect(reverse('home'))
