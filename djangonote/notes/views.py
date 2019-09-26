@@ -4,11 +4,12 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from notes.models import Note, Tag
 from notes.forms import NoteForm, TagForm
+from django.utils.text import slugify
 from django.contrib.auth.decorators import user_passes_test
 
 
 def superuser_only(user):
-    return user.is_authenticated and user.is_superuser
+    return (user.is_authenticated and user.is_superuser)
 
 
 @user_passes_test(superuser_only, login_url="/")
@@ -76,5 +77,3 @@ def tagsearch(request, **kwargs):
     notes = tag.notes.all()
     return render(request, 'notes/tagsearch.html', {'notes': notes, 'tag': tag})
 
-# def logout(request):
-#     return render(request, 'notes/index.html')
